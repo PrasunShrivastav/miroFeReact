@@ -29,8 +29,7 @@ Then open:
 - http://localhost:3001 → Products app standalone
 - http://localhost:3002 → Cart app standalone
 
-> Start the remotes before (or together with) the host — the host fetches
-> `remoteEntry.js` from `:3001` and `:3002` at runtime. `npm start` handles the order automatically.
+> Start the remotes before (or together with) the host 
 
 ## Individual commands
 
@@ -67,10 +66,3 @@ microfrontend-webpack/
         ├── cartStore.js    # shared cart logic (localStorage + window event)
         └── App.js          # standalone mode for :3002
 ```
-
-## How it works (30-second version)
-
-1. Each remote's `webpack.config.js` uses `ModuleFederationPlugin` with `exposes` to publish a component, producing a `remoteEntry.js` file served on its own port.
-2. The host declares those URLs under `remotes` and loads them lazily with `React.lazy(() => import("products/ProductsList"))` inside `<Suspense>`, rendered on `/products` and `/cart` routes.
-3. `shared: { react, react-dom, react-router-dom }` with `singleton: true` guarantees exactly one copy of React in the page, so hooks work across app boundaries.
-4. `src/index.js` only does `import("./bootstrap")` — this async boundary is required so shared singletons initialise before React renders.
