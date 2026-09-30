@@ -1,0 +1,17 @@
+{
+  "name": "microfrontend-webpack",
+  "version": "1.0.0",
+  "private": true,
+  "description": "React Microfrontend Architecture (Webpack Module Federation): host + products + cart",
+  "scripts": {
+    "install:all": "npm install --prefix host && npm install --prefix products && npm install --prefix cart",
+    "start": "concurrently -n host,products,cart -c blue,green,magenta \"npm start --prefix host\" \"npm start --prefix products\" \"npm start --prefix cart\"",
+    "start:host": "npm start --prefix host",
+    "start:products": "npm start --prefix products",
+    "start:cart": "npm start --prefix cart",
+    "build:all": "npm run build --prefix host && npm run build --prefix products && npm run build --prefix cart"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
